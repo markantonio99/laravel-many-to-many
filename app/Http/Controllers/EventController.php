@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreeventRequest;
 use App\Http\Requests\UpdateeventRequest;
 use App\Models\event;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -26,21 +27,17 @@ class EventController extends Controller
         return view('eventi.index', compact('events', 'num_of_trashed'));
     }
     
-    
-    
-    
-    
-    
-    
 
     public function create()
     {
-        return view('eventi.create');
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('eventi.create', compact('categories'));
     }
 
     public function store(StoreeventRequest $request)
     {
         $data = $request->validated();
+       
          
         $data['slug'] = Str::slug($data['title']);
 
@@ -63,6 +60,7 @@ class EventController extends Controller
 
     public function show(event $event)
     {
+        $event->load('category');
         return view('eventi.show', compact('event'));
     }
 

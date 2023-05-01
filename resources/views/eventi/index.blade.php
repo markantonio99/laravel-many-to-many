@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center">
             <h1 class="me-auto">Tutti i tuoi Eventi</h1>
              
-
+     
             <div>
                 @if(request('trashed'))
                 <a class="btn btn-sm btn-light" href="{{ route('events.index') }}">Tutti gli eventi</a>
@@ -33,8 +33,8 @@
                           <th>Categoria</th>
                           {{-- <th>Data evento</th> --}}
                           <th>Location</th>
-                          <th>Data creazione evento</th>
-                          <th>Data della modifica evento</th>
+                          <th>Pubblicato:</th>
+                          <th>Aggiornato:</th>
                       </tr>
                   </thead>
                  <tbody>

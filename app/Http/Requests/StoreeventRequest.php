@@ -25,7 +25,8 @@ class StoreeventRequest extends FormRequest
     {
         return [
              'title' =>'required|max:150|unique:events,title',
-             'description' => 'nullable|string'
-        ];
+             'description' => 'nullable|string',
+             'category_id' => 'nullable|exists:categories,id', 
+            ];
     }
 }
