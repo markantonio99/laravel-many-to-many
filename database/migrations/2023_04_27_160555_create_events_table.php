@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title', 150)->unique();
-            $table->date('data');
-            $table->string('location');
+            $table->string('location')->default('');
             $table->text('description')->nullable();
             $table->string('slug');
             $table->softDeletes();

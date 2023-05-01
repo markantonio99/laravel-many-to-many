@@ -22,8 +22,7 @@ class EventSeeder extends Seeder
             // Creiamo un nuovo evento con i dati di prova
             Event::create([
                 'title' => $faker->sentence,
-                'data' => $faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
-                'location' => $faker->address,
+                'location' => 'New York', // Valore di default
                 'description' => $faker->paragraph,
                 'slug' => $faker->slug
             ]);
