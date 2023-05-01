@@ -5,16 +5,33 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreeventRequest;
 use App\Http\Requests\UpdateeventRequest;
 use App\Models\event;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = event::withTrashed()->get();
-    
-        return view('eventi.index', compact('events'));
+        $trashed = $request->input('trashed');
+        
+        if($trashed) {
+            $events = Event::onlyTrashed()->get();
+        } else{
+            $events = Event::all();
+        }
+        
+        $num_of_trashed = Event::onlyTrashed()->count();
+        
+
+        return view('eventi.index', compact('events', 'num_of_trashed'));
     }
+    
+    
+    
+    
+    
+    
+    
 
     public function create()
     {
@@ -38,6 +55,8 @@ class EventController extends Controller
     
         if ($event->trashed()) {
             $event->restore();
+
+            request()->session()->flash('message', "L'Evento è stato ripristinato" );
         }
         return back();
     }
@@ -66,9 +85,13 @@ class EventController extends Controller
 
     public function destroy(event $event)
     {
-        $event->delete();
+       if($event->trashed()){
+            $event->forceDelete();  //eliminizaione definitiva
+       } else{
+        $event->delete(); //eliminizione soft
+       }
 
-        return redirect()->route('events.index');
+        return back();
     }
 }
 

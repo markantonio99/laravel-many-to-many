@@ -1,10 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(request()->session()->exists('message'))
+            <div class="alert fixed alert-primary" role="alert">
+                {{request()->session()->pull('message')}}
+            </div>
+    @endif
+
+    
     <div class=container>
         <div class="d-flex align-items-center">
             <h1 class="me-auto">Tutti i tuoi Eventi</h1>
+             
+
             <div>
+                @if(request('trashed'))
+                <a class="btn btn-sm btn-light" href="{{ route('events.index') }}">Tutti gli eventi</a>
+                @else 
+                <a class="btn btn-sm btn-light" href="{{ route('events.index', ['trashed' => true]) }}">Eliminati {{ $num_of_trashed }}</a>
+                @endif
                 <a class="btn btn-sm btn-primary" href="{{ route('events.create') }}">Aggiungi nuovo Evento</a>
             </div>
         </div>
@@ -21,7 +35,6 @@
                           <th>Location</th>
                           <th>Data creazione evento</th>
                           <th>Data della modifica evento</th>
-                          <th>Eliminato</th> 
                       </tr>
                   </thead>
                  <tbody>
@@ -34,9 +47,9 @@
                             </th>
                               <th>{{$event->slug}}</th>
                               <th>{{$event->location}}</th>
-                              <th>{{$event->created_at}}</th>
-                              <th>{{$event->updated_at}}</th>
-                              <th>{{$event->deleted_at ? $event->deleted_at : '' }}</th>                
+                              <th>{{$event->created_at->format('d/m/y')}}</th>
+                              <th>{{$event->updated_at->format('d/m/y')}}</th>
+                              <th>{{$event->deleted_at ? $event->deleted_at->format('d/m/y') : '' }}</th>                
                                       <th>
                                         <div class="d-flex">
                                            <a class="btn btn-sm btn-secondary" href="{{ route('events.edit', $event) }}">Modifica</a>

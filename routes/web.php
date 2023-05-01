@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('events', EventController::class)->parameters([
         'events' => 'event:slug'
-    ])->withTrashed();
+    ])->withTrashed(['show', 'edit', 'update', 'destroy']);
 });
 
 require __DIR__.'/auth.php';
