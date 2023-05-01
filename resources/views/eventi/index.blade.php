@@ -30,7 +30,7 @@
                       <tr>
                           <th>Id</th>
                           <th>Title</th>
-                          <th>Slug</th>
+                          <th>Categoria</th>
                           {{-- <th>Data evento</th> --}}
                           <th>Location</th>
                           <th>Data creazione evento</th>
@@ -45,7 +45,7 @@
                               <th>
                                 <a href="{{ route('events.show',$event) }}">{{$event->title}}</a>
                             </th>
-                              <th>{{$event->slug}}</th>
+                              <th> {{$event->category ? $event->category->name : 'Nessuna categoria'}}</th>
                               <th>{{$event->location}}</th>
                               <th>{{$event->created_at->format('d/m/y')}}</th>
                               <th>{{$event->updated_at->format('d/m/y')}}</th>
